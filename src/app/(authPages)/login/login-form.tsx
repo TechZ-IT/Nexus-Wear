@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -20,6 +19,14 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { setAuth } from "@/redux/features/auth/authSlice";
+
+// Define a proper error type instead of using 'any'
+interface ApiError {
+  data?: {
+    message?: string;
+  };
+  status?: string;
+}
 
 export function LoginForm({
   className,
@@ -58,19 +65,29 @@ export function LoginForm({
       toast.success(result.message);
       router.push("/");
       
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error("Login error:", err);
       
-      // Handle different error formats
-      if (err.data?.message) {
-        toast.error(err.data.message);
-        setLoginError(err.data.message);
-      } else if (err.status === "FETCH_ERROR") {
-        const errorMsg = "Network error. Please check your connection.";
-        toast.error(errorMsg);
-        setLoginError(errorMsg);
+      // Type guard to check if it's an ApiError
+      const isApiError = (error: unknown): error is ApiError => {
+        return typeof error === 'object' && error !== null && ('data' in error || 'status' in error);
+      };
+      
+      if (isApiError(err)) {
+        if (err.data?.message) {
+          toast.error(err.data.message);
+          setLoginError(err.data.message);
+        } else if (err.status === "FETCH_ERROR") {
+          const errorMsg = "Network error. Please check your connection.";
+          toast.error(errorMsg);
+          setLoginError(errorMsg);
+        } else {
+          const errorMsg = "Login failed. Please check your credentials and try again.";
+          toast.error(errorMsg);
+          setLoginError(errorMsg);
+        }
       } else {
-        const errorMsg = "Login failed. Please check your credentials and try again.";
+        const errorMsg = "An unexpected error occurred. Please try again.";
         toast.error(errorMsg);
         setLoginError(errorMsg);
       }
@@ -171,7 +188,7 @@ export function LoginForm({
             </Button>
             <div className="mt-4 text-center text-sm">
               Don&apos;t have an account?{" "}
-              <a href="#" className="underline underline-offset-4">
+              <a href="/register" className="underline underline-offset-4">
                 Sign up
               </a>
             </div>
@@ -181,4 +198,3 @@ export function LoginForm({
     </div>
   );
 }
-
