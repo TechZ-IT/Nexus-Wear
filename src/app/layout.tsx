@@ -1,6 +1,11 @@
 import Navbar from "@/components/Navbar/Navbar";
 import "./globals.css";
-
+import BasicLayout from "./BasicLayout";
+import type { Metadata } from 'next'
+ 
+export const metadata: Metadata = {
+  title: 'Nexus',
+}
 
 
 export default function RootLayout({
@@ -9,17 +14,6 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" data-theme="light">
-      <body
-        className={""}
-      >
-        <nav>
-          <Navbar></Navbar>
-        </nav>
-        <main>
-          {children}
-        </main>
-      </body>
-    </html>
+    <BasicLayout>{children}</BasicLayout>
   );
 }
