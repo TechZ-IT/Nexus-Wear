@@ -14,7 +14,6 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useLoginCustomerMutation } from "@/redux/api/user/user";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -31,50 +30,32 @@ export function RegisterForm({
     formState: { errors },
   } = useForm<IRegister>(); // Use IRegister instead of ILogin
 
-  const [loginCustomer, { isLoading, error }] = useLoginCustomerMutation();
-  const dispatch = useDispatch();
-  const router = useRouter();
-  const [loginError, setLoginError] = useState<string | null>(null);
-
   const onSubmit: SubmitHandler<IRegister> = async (data) => {
     const { email, password } = data;
+    console.log(email, password)
+    // try {
+    //   console.log("Login Response:", result);
 
-    try {
-      // Clear any previous errors
-      setLoginError(null);
+    //   toast.success(result.message);
+    //   router.push("/");
 
-      // Call the login mutation
-      const result = await loginCustomer({ email, password }).unwrap();
-      console.log("Login Response:", result);
+    // } catch (err: any) {
+    //   console.error("Login error:", err);
 
-      // Dispatch the credentials to Redux store using your auth slice
-      dispatch(setAuth({
-        token: result.accessToken,
-        id: result.data.id.toString(),
-        email: result.data.email,
-        expiresAt: null
-      }));
-
-      toast.success(result.message);
-      router.push("/");
-
-    } catch (err: any) {
-      console.error("Login error:", err);
-
-      // Handle different error formats
-      if (err.data?.message) {
-        toast.error(err.data.message);
-        setLoginError(err.data.message);
-      } else if (err.status === "FETCH_ERROR") {
-        const errorMsg = "Network error. Please check your connection.";
-        toast.error(errorMsg);
-        setLoginError(errorMsg);
-      } else {
-        const errorMsg = "Login failed. Please check your credentials and try again.";
-        toast.error(errorMsg);
-        setLoginError(errorMsg);
-      }
-    }
+    //   // Handle different error formats
+    //   if (err.data?.message) {
+    //     toast.error(err.data.message);
+    //     setLoginError(err.data.message);
+    //   } else if (err.status === "FETCH_ERROR") {
+    //     const errorMsg = "Network error. Please check your connection.";
+    //     toast.error(errorMsg);
+    //     setLoginError(errorMsg);
+    //   } else {
+    //     const errorMsg = "Login failed. Please check your credentials and try again.";
+    //     toast.error(errorMsg);
+    //     setLoginError(errorMsg);
+    //   }
+    // }
   };
 
   return (
@@ -88,19 +69,19 @@ export function RegisterForm({
         </CardHeader>
         <CardContent>
           <div>
-            {loginError && (
+            {/* {loginError && (
               <div className="mb-4 p-3 bg-red-100 border border-red-200 text-red-700 rounded-md text-sm">
                 {loginError}
               </div>
-            )}
+            )} */}
 
-            {error && (
+            {/* {error && (
               <div className="mb-4 p-3 bg-red-100 border border-red-200 text-red-700 rounded-md text-sm">
                 {'data' in error ?
                   (error.data as { message?: string }).message || 'Login failed' :
                   'Login failed'}
               </div>
-            )}
+            )} */}
 
             <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
               <div className="grid gap-3">
