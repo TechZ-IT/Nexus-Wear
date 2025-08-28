@@ -2,7 +2,7 @@
 "use client";
 
 import { store } from '@/redux/store';
-// import { usePathname } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import React, { useEffect } from 'react';
 import { Toaster } from 'react-hot-toast';
 import { Provider, useDispatch } from 'react-redux';
@@ -26,18 +26,18 @@ export default function BasicLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // const pathName = usePathname();
+  const pathName = usePathname();
   
   return (
     <html lang="en" data-theme="light">
       <body >
         <Provider store={store}>
           <AuthInitializer>
-            {/* {(pathName === '/login') || (pathName === '/register') ? null : (
-            )} */}
+             {(pathName === '/login') || (pathName === '/register') ? null : (
               <nav>
                 <Navbar />
               </nav>
+            )}
             <main>
               {children}
             </main>
