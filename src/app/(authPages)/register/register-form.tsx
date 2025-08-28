@@ -90,6 +90,7 @@ export function RegisterForm({
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card className="bg-[#F5F5F5]">
         <CardHeader>
+          <h1 className="text-4xl font-bold text-center my-3">Register Now</h1>
           <CardTitle>Create an account</CardTitle>
           <CardDescription>
             Enter your details below to create your account
