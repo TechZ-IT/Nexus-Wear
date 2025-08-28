@@ -1,4 +1,3 @@
-// store/api/user/user.ts
 import { apiSlice } from "../apiSlice";
 
 export const customerApiSlice = apiSlice.injectEndpoints({
@@ -11,10 +10,19 @@ export const customerApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["auth", "customer"],
     }),
+    registerCustomer: builder.mutation({
+      query: (credentials: { name:string, email: string; password: string }) => ({
+        url: "/customer",
+        method: "POST",
+        body: credentials,
+      }),
+      invalidatesTags: ["auth", "customer"],
+    }),
 
   }),
 });
 
 export const {
-  useLoginCustomerMutation
+  useLoginCustomerMutation,
+  useRegisterCustomerMutation
 } = customerApiSlice;
