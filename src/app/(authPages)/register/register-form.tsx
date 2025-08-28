@@ -1,10 +1,10 @@
-
 "use client";
 
 import { useForm, SubmitHandler } from "react-hook-form";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { IRegister } from '@/@types/auth';
+import { ApiError } from '@/@types/error';
 import {
   Card,
   CardContent,
@@ -19,6 +19,8 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { setAuth } from "@/redux/features/auth/authSlice";
+import { useRegisterCustomerMutation } from "@/redux/api/user/user";
+import Link from "next/link";
 
 export function RegisterForm({
   className,
@@ -28,60 +30,88 @@ export function RegisterForm({
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<IRegister>(); // Use IRegister instead of ILogin
+  } = useForm<IRegister>();
+
+  const [registerCustomer, { isLoading, error }] = useRegisterCustomerMutation();
+  const dispatch = useDispatch();
+  const router = useRouter();
+  const [registerError, setRegisterError] = useState<string | null>(null);
 
   const onSubmit: SubmitHandler<IRegister> = async (data) => {
-    const { email, password } = data;
-    console.log(email, password)
-    // try {
-    //   console.log("Login Response:", result);
+    const { name, email, password } = data;
+    
+    // Clear previous errors
+    setRegisterError(null);
+    
+    try {
+      const result = await registerCustomer({ name, email, password }).unwrap();
+      console.log("Register Response:", result);
+      dispatch(setAuth({
+        token: result.accessToken,
+        id: result.data.id.toString(),
+        email: result.data.email,
+        expiresAt: null
+      }));
 
-    //   toast.success(result.message);
-    //   router.push("/");
+      toast.success(result.message);
+      router.push("/");
 
-    // } catch (err: any) {
-    //   console.error("Login error:", err);
+    } catch (err: unknown) {
 
-    //   // Handle different error formats
-    //   if (err.data?.message) {
-    //     toast.error(err.data.message);
-    //     setLoginError(err.data.message);
-    //   } else if (err.status === "FETCH_ERROR") {
-    //     const errorMsg = "Network error. Please check your connection.";
-    //     toast.error(errorMsg);
-    //     setLoginError(errorMsg);
-    //   } else {
-    //     const errorMsg = "Login failed. Please check your credentials and try again.";
-    //     toast.error(errorMsg);
-    //     setLoginError(errorMsg);
-    //   }
-    // }
+      // Handle different error formats with proper typing
+      if (typeof err === 'object' && err !== null) {
+        const error = err as ApiError;
+        
+        if (error.data?.message) {
+          const errorMessage = error.data.message;
+          toast.error(errorMessage);
+          setRegisterError(errorMessage);
+        } else if (error.status === "FETCH_ERROR") {
+          const errorMsg = "Network error. Please check your connection.";
+          toast.error(errorMsg);
+          setRegisterError(errorMsg);
+        } else if (error.message) {
+          toast.error(error.message);
+          setRegisterError(error.message);
+        } else {
+          const errorMsg = "Registration failed. Please try again.";
+          toast.error(errorMsg);
+          setRegisterError(errorMsg);
+        }
+      } else {
+        const errorMsg = "Registration failed. Please try again.";
+        toast.error(errorMsg);
+        setRegisterError(errorMsg);
+      }
+    }
   };
 
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card className="bg-[#F5F5F5]">
         <CardHeader>
-          <CardTitle>Login to your account</CardTitle>
+          <CardTitle>Create an account</CardTitle>
           <CardDescription>
-            Enter your email below to login to your account
+            Enter your details below to create your account
           </CardDescription>
         </CardHeader>
         <CardContent>
           <div>
-            {/* {loginError && (
+            {/* Show only one error at a time - prefer registerError first */}
+            {registerError && (
               <div className="mb-4 p-3 bg-red-100 border border-red-200 text-red-700 rounded-md text-sm">
-                {loginError}
+                {registerError}
               </div>
-            )} */}
+            )}
 
-            {/* {error && (
+            {/* Only show RTK error if there's no registerError */}
+            {error && !registerError && (
               <div className="mb-4 p-3 bg-red-100 border border-red-200 text-red-700 rounded-md text-sm">
                 {'data' in error ?
-                  (error.data as { message?: string }).message || 'Login failed' :
-                  'Login failed'}
+                  (error.data as { message?: string }).message || 'Registration failed' :
+                  'Registration failed'}
               </div>
-            )} */}
+            )}
 
             <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
               <div className="grid gap-3">
@@ -155,19 +185,20 @@ export function RegisterForm({
                 )}
               </div>
               <div className="flex flex-col gap-3">
-                <Button
-                  type="submit"
+                <Button 
+                  type="submit" 
                   className="w-full"
+                  disabled={isLoading}
                 >
-                  Register
+                  {isLoading ? "Registering..." : "Register"}
                 </Button>
               </div>
             </form>
             <div className="mt-4 text-center text-sm">
-              Don&apos;t have an account?{" "}
-              <a href="#" className="underline underline-offset-4">
+              Already have an account?{" "}
+              <Link href="/login" className="underline underline-offset-4">
                 Login
-              </a>
+              </Link>
             </div>
           </div>
         </CardContent>
