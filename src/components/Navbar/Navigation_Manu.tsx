@@ -52,7 +52,7 @@ const components: { title: string; href: string; description: string }[] = [
   },
 ]
 
-export function Navbar_Menu() {
+export function Navigation_Menu() {
   return (
     <NavigationMenu viewport={false}>
       <NavigationMenuList>
@@ -105,7 +105,7 @@ export function Navbar_Menu() {
         </NavigationMenuItem>
         <NavigationMenuItem>
           <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
-            <Link href="/docs">Docs</Link>
+            <Link href="/">Docs</Link>
           </NavigationMenuLink>
         </NavigationMenuItem>
         <NavigationMenuItem>
@@ -114,7 +114,7 @@ export function Navbar_Menu() {
             <ul className="grid w-[300px] gap-4">
               <li>
                 <NavigationMenuLink asChild>
-                  <Link href="#">
+                  <Link href="/">
                     <div className="font-medium">Components</div>
                     <div className="text-muted-foreground">
                       Browse all components in the library.
@@ -122,7 +122,7 @@ export function Navbar_Menu() {
                   </Link>
                 </NavigationMenuLink>
                 <NavigationMenuLink asChild>
-                  <Link href="#">
+                  <Link href="/">
                     <div className="font-medium">Documentation</div>
                     <div className="text-muted-foreground">
                       Learn how to use the library.
@@ -130,7 +130,7 @@ export function Navbar_Menu() {
                   </Link>
                 </NavigationMenuLink>
                 <NavigationMenuLink asChild>
-                  <Link href="#">
+                  <Link href="/">
                     <div className="font-medium">Blog</div>
                     <div className="text-muted-foreground">
                       Read our latest blog posts.
@@ -147,13 +147,13 @@ export function Navbar_Menu() {
             <ul className="grid w-[200px] gap-4">
               <li>
                 <NavigationMenuLink asChild>
-                  <Link href="#">Components</Link>
+                  <Link href="/">Components</Link>
                 </NavigationMenuLink>
                 <NavigationMenuLink asChild>
-                  <Link href="#">Documentation</Link>
+                  <Link href="/">Documentation</Link>
                 </NavigationMenuLink>
                 <NavigationMenuLink asChild>
-                  <Link href="#">Blocks</Link>
+                  <Link href="/">Blocks</Link>
                 </NavigationMenuLink>
               </li>
             </ul>
@@ -165,19 +165,19 @@ export function Navbar_Menu() {
             <ul className="grid w-[200px] gap-4">
               <li>
                 <NavigationMenuLink asChild>
-                  <Link href="#" className="flex-row items-center gap-2">
+                  <Link href="/" className="flex-row items-center gap-2">
                     <CircleHelpIcon />
                     Backlog
                   </Link>
                 </NavigationMenuLink>
                 <NavigationMenuLink asChild>
-                  <Link href="#" className="flex-row items-center gap-2">
+                  <Link href="/" className="flex-row items-center gap-2">
                     <CircleIcon />
                     To Do
                   </Link>
                 </NavigationMenuLink>
                 <NavigationMenuLink asChild>
-                  <Link href="#" className="flex-row items-center gap-2">
+                  <Link href="/" className="flex-row items-center gap-2">
                     <CircleCheckIcon />
                     Done
                   </Link>

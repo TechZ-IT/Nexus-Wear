@@ -1,13 +1,13 @@
 // app/(basic)/layout.tsx
 "use client";
 
-import Navbar from '@/components/Navbar/Navbar';
 import { store } from '@/redux/store';
-import { usePathname } from 'next/navigation';
+// import { usePathname } from 'next/navigation';
 import React, { useEffect } from 'react';
 import { Toaster } from 'react-hot-toast';
 import { Provider, useDispatch } from 'react-redux';
 import { initializeAuth } from "@/redux/features/auth/authSlice";
+import Navbar from '@/components/Navbar/Navbar';
 
 // Create the AuthInitializer as a separate client component
 function AuthInitializer({ children }: { children: React.ReactNode }) {
@@ -26,18 +26,18 @@ export default function BasicLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const pathName = usePathname();
+  // const pathName = usePathname();
   
   return (
     <html lang="en" data-theme="light">
-      <body className={""}>
+      <body >
         <Provider store={store}>
           <AuthInitializer>
-            {(pathName === '/login') || (pathName === '/register') ? null : (
+            {/* {(pathName === '/login') || (pathName === '/register') ? null : (
+            )} */}
               <nav>
                 <Navbar />
               </nav>
-            )}
             <main>
               {children}
             </main>
