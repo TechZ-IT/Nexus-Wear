@@ -19,7 +19,7 @@ export default function LoginPage() {
           </div>
         </div>
       </div>
-      <div className=" relative flex items-center justify-center">
+      <div className="hidden relative lg:flex items-center justify-center">
         <div className="absolute inset-0 bg-[url('https://nexus-wear-dashboard.vercel.app/loginBg1.jpg')] bg-cover" />
         <div className="absolute inset-0 bg-black/20 backdrop-blur-sm" />
         <div className="relative z-10 flex flex-col items-center gap-4 text-white">
