@@ -33,7 +33,7 @@ export default function BasicLayout({
       <body >
         <Provider store={store}>
           <AuthInitializer>
-             {(pathName === '/login') || (pathName === '/register') ? null : (
+             {(pathName === '/login') || (pathName === '/register') || (pathName === '/dashboard') ? null : (
               <nav>
                 <Navbar />
               </nav>
