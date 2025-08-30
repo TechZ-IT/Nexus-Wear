@@ -10,8 +10,8 @@ import { usePathname } from 'next/navigation'
 
 
 export default function Nav_1() {
-    const user = useAuthState();
-    console.log(user?.token)
+    // const user = useAuthState();
+    // console.log(user)
     const pathName = usePathname();
 
     return (
@@ -28,8 +28,8 @@ export default function Nav_1() {
             <div className="flex gap-2">
 
                 <Button><MdLocalGroceryStore /></Button>
-                <Button variant={"outline"} className="md:block hidden">Login</Button>
-                <Button className="md:block hidden">Register</Button>
+                <Link href={'/login'}><Button variant={"outline"} className="md:block hidden">Login</Button></Link>
+                <Link href={'/register'}><Button className="md:block hidden">Register</Button></Link>
             </div>
         </div>
     )
