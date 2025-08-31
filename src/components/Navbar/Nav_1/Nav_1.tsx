@@ -3,7 +3,7 @@ import Link from 'next/link'
 import React from 'react'
 import { Button } from '@/components/ui/button'
 import { MdLocalGroceryStore } from 'react-icons/md'
-import Nav_Search from './Nav_Search'
+import Nav_Search from '../Nav_Search'
 import useAuthState from '@/hooks/useAuthState'
 import { IoMenuOutline } from "react-icons/io5";
 import { usePathname } from 'next/navigation'
