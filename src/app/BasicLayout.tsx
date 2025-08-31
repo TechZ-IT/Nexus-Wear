@@ -1,7 +1,7 @@
 // app/(basic)/layout.tsx
 "use client";
-
-import { store } from '@/redux/store';
+import { PersistGate } from 'redux-persist/integration/react';
+import { store, persistor } from '@/redux/store';
 import { usePathname } from 'next/navigation';
 import React, { useEffect } from 'react';
 import { Toaster } from 'react-hot-toast';
@@ -27,24 +27,26 @@ export default function BasicLayout({
   children: React.ReactNode;
 }>) {
   const pathName = usePathname();
-  
+
   return (
     <html lang="en" data-theme="light">
       <body >
         <Provider store={store}>
-          <AuthInitializer>
-             {(pathName === '/login') || (pathName === '/register') || (pathName === '/dashboard') ? null : (
-              <nav>
-                <Navbar />
-              </nav>
-            )}
-            <main>
-              {children}
-            </main>
-            <Toaster position='top-right' />
-          </AuthInitializer>
+          <PersistGate loading={null} persistor={persistor}>
+            <AuthInitializer>
+              {(pathName === '/login') || (pathName === '/register') || (pathName === '/dashboard') ? null : (
+                <nav>
+                  <Navbar />
+                </nav>
+              )}
+              <main>
+                {children}
+              </main>
+              <Toaster position='top-right' />
+            </AuthInitializer>
+          </PersistGate>
         </Provider>
       </body>
-    </html>
+    </html >
   );
 }
