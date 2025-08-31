@@ -4,6 +4,7 @@ export interface IAuthType {
   expiresAt: number | null;
   id: string | null;
   email: string | null;
+  image: string | null; // এই property টি যোগ করুন
   name?: string | null;
   role?: string | null;
   user?: {

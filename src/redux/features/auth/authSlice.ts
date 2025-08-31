@@ -8,6 +8,7 @@ const initialState: IAuthType = {
   expiresAt: null,
   id: null,
   email: null,
+  image: null,
 };
 
 const authSlice = createSlice({
@@ -15,63 +16,61 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     setAuth(state, action: PayloadAction<IAuthType>) {
-      const { token, id, email } = action.payload;
+      const { token, id, email, image } = action.payload;
       state.token = token;
       state.id = id;
       state.email = email;
-      const user = {
-        token,
-        id,
-        email,
-      };
-    //   state.auth.push()
-      const expiresIn = 12 * 60 * 60 * 1000;
+      state.image = image;
+      
+      const expiresIn = 12 * 60 * 60 * 1000; // 12 hours
       state.expiresAt = Date.now() + expiresIn;
 
-      // Store token and expiration in localStorage
-      if (token) {
-        localStorage.setItem("tokenforauthuser", token);
-      }
-      localStorage.setItem(
-        "expiresAtuserstoken",
-        (Date.now() + expiresIn).toString()
-      );
-
-      // Store user info if needed
-      if (id && email) {
-        localStorage.setItem("authUser", JSON.stringify({ id, email }));
+      // Store in localStorage
+      if (typeof window !== "undefined") {
+        if (token) {
+          localStorage.setItem("tokenforauthuser", token);
+        }
+        localStorage.setItem("expiresAtuserstoken", state.expiresAt.toString());
+        
+        if (id && email) {
+          localStorage.setItem("authUser", JSON.stringify({ id, email, image }));
+        }
       }
     },
     clearAuth(state) {
       state.token = null;
       state.id = null;
       state.email = null;
+      state.image = null;
       state.expiresAt = null;
-      localStorage.removeItem("tokenforauthuser");
-      localStorage.removeItem("expiresAtuserstoken");
-      localStorage.removeItem("authUser");
+      
+      if (typeof window !== "undefined") {
+        localStorage.removeItem("tokenforauthuser");
+        localStorage.removeItem("expiresAtuserstoken");
+        localStorage.removeItem("authUser");
+      }
     },
     checkTokenExpiry(state) {
+      if (typeof window === "undefined") return;
+      
       const expiresAt = Number(localStorage.getItem("expiresAtuserstoken"));
       if (expiresAt && Date.now() > expiresAt) {
         state.token = null;
         state.id = null;
         state.email = null;
+        state.image = null;
         state.expiresAt = null;
+        
         localStorage.removeItem("tokenforauthuser");
         localStorage.removeItem("expiresAtuserstoken");
         localStorage.removeItem("authUser");
+        
         toast.error("Session Expired! Please sign in again!");
-      } else if (expiresAt) {
-        // Update expiration time
-        const expiresIn = expiresAt - Date.now();
-        localStorage.setItem(
-          "expiresAtuserstoken",
-          (Date.now() + expiresIn).toString()
-        );
       }
     },
     initializeAuth(state) {
+      if (typeof window === "undefined") return;
+      
       const token = localStorage.getItem("tokenforauthuser");
       const expiresAt = localStorage.getItem("expiresAtuserstoken");
       const userStr = localStorage.getItem("authUser");
@@ -82,6 +81,7 @@ const authSlice = createSlice({
           state.token = token;
           state.id = user.id;
           state.email = user.email;
+          state.image = user.image || null;
           state.expiresAt = Number(expiresAt);
         } catch (error) {
           console.error("Failed to parse user data from localStorage", error);

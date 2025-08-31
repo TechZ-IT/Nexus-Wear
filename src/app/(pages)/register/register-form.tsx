@@ -43,6 +43,7 @@ export function RegisterForm({
         token: result.accessToken,
         id: result.data.id.toString(),
         email: result.data.email,
+        image: result.data.image,
         expiresAt: null
       }));
 

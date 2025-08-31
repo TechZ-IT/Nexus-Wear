@@ -16,6 +16,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
+import { Nav_Dropdown } from './Nav_Dropdown'
 
 const categories = [
     "Mens",
@@ -30,7 +31,7 @@ const categories = [
 
 export default function Nav_1() {
     const pathName = usePathname();
-
+    const user = useAuthState();
     return (
         <div className="flex justify-between items-center">
             <div className='flex gap-2'>
@@ -45,21 +46,24 @@ export default function Nav_1() {
                         </SelectTrigger>
                         <SelectContent>
                             <SelectGroup>
-                                {categories.map((item, ind)=> <SelectItem key={ind} value={item}>{item}</SelectItem>)}
+                                {categories.map((item, ind) => <SelectItem key={ind} value={item}>{item}</SelectItem>)}
                             </SelectGroup>
                         </SelectContent>
                     </Select>
                 )}
             </div>
 
-            <div className="max-w-3xl w-full">
+            <div className="max-w-3xl w-full lg:block hidden">
                 <Nav_Search></Nav_Search>
             </div>
 
             <div className="flex gap-2">
                 <Button><MdLocalGroceryStore /></Button>
-                <Link href={'/login'}><Button variant={"outline"} className="md:block hidden">Login</Button></Link>
-                <Link href={'/register'}><Button className="md:block hidden">Register</Button></Link>
+                {
+                    user && user.email ? <Nav_Dropdown /> : <>
+                        <Link href={'/login'}><Button variant={"outline"} className="">Login</Button></Link>
+                        <Link href={'/register'}><Button className="">Register</Button></Link></>
+                }
             </div>
         </div>
     )
