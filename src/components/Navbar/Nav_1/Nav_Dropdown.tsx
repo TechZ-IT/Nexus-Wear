@@ -15,15 +15,23 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import useAuthState from "@/hooks/useAuthState"
+import { clearAuth } from "@/redux/features/auth/authSlice";
+import { useDispatch } from "react-redux"; // Import useDispatch
 
 export function Nav_Dropdown() {
     const user = useAuthState();
+    const dispatch = useDispatch(); // Get the dispatch function
+
+    const handleLogout = () => {
+        dispatch(clearAuth()); // Dispatch the action
+    };
+
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
                 <Avatar className="rounded-lg h-9 w-9">
                     <AvatarImage
-                    className="border-2 rounded-lg "
+                        className="border-2 rounded-lg"
                         src={user?.image || ''}
                         alt="@evilrabbit"
                     />
@@ -74,7 +82,7 @@ export function Nav_Dropdown() {
                 <DropdownMenuItem>Support</DropdownMenuItem>
                 <DropdownMenuItem disabled>API</DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>
+                <DropdownMenuItem onClick={handleLogout}> {/* Use the handler */}
                     Log out
                     <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
                 </DropdownMenuItem>
