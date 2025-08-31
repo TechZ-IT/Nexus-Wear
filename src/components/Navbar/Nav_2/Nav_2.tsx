@@ -31,7 +31,7 @@ export default function Nav_2() {
           <div className='hidden md:block'>
             <Navigation_Menu></Navigation_Menu>
           </div>
-          <div className="w-full md:hidden flex ml-3">
+          <div className="w-full md:hidden flex">
             <Nav_Search></Nav_Search>
           </div>
         </div>
