@@ -6,8 +6,8 @@ import Nav_Search from '../Nav_Search'
 
 export default function Nav_2() {
   return (
-    <div className='flex items-center'>
-      <NavigationMenu className='list-none'> {/* Single NavigationMenu wrapper */}
+    <div className='flex items-center w-full'>
+      <NavigationMenu className='list-none w-full'> {/* Single NavigationMenu wrapper */}
         <NavigationMenuItem>
           <NavigationMenuTrigger className='bg-black text-white hover:bg-black hover:text-white'>All categories</NavigationMenuTrigger>
           <NavigationMenuContent>
@@ -26,12 +26,14 @@ export default function Nav_2() {
             </ul>
           </NavigationMenuContent>
         </NavigationMenuItem>
-        
-        <div className='hidden lg:block'>
-          <Navigation_Menu></Navigation_Menu>
-        </div>
-        <div className='lg:hidden ml-3 block'>
-        <Nav_Search></Nav_Search>
+
+        <div className='w-full'>
+          <div className='hidden md:block'>
+            <Navigation_Menu></Navigation_Menu>
+          </div>
+          <div className="w-full md:hidden flex ml-3">
+            <Nav_Search></Nav_Search>
+          </div>
         </div>
       </NavigationMenu>
     </div>

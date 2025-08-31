@@ -25,22 +25,20 @@ const categories = [
     "Accessories",
     "Dresses",
     "Terms & conditions",
-    "About Us",
-    "Contact Us",
 ]
 
 export default function Nav_1() {
     const pathName = usePathname();
     const user = useAuthState();
+    const showMenu = (pathName === '/about-us') || (pathName === '/contact-us');
     return (
-        <div className="flex justify-between items-center">
+        <div className="flex justify-between items-center ">
             <div className='flex gap-2'>
                 <Link href={'/'}>
                     <img src="https://nexus-wear-dashboard.vercel.app/mainLogo.png" alt="Logo" className="w-20 h-9" />
                 </Link>
-
-                {pathName !== '/' && (
-                    <Select>
+                {
+                    showMenu ? <Select>
                         <SelectTrigger className="">
                             <IoMenuOutline className="" />
                         </SelectTrigger>
@@ -49,11 +47,11 @@ export default function Nav_1() {
                                 {categories.map((item, ind) => <SelectItem key={ind} value={item}>{item}</SelectItem>)}
                             </SelectGroup>
                         </SelectContent>
-                    </Select>
-                )}
+                    </Select> :''
+                }
             </div>
 
-            <div className="max-w-3xl w-full lg:block hidden">
+            <div className={`w-full ${user ? 'md:min-w-[400px]' : 'md:min-w-[500px]'}  md:block hidden mx-5`}>
                 <Nav_Search></Nav_Search>
             </div>
 

@@ -14,8 +14,8 @@ export default function Nav_Search() {
     };
 
     return (
-        <div>
-            <form onSubmit={handleSubmit}>
+        <div className="w-full">
+            <form onSubmit={handleSubmit} className="w-full">
                 <div className="flex justify-center items-center mr-3 border-2 border-secondary-color rounded-md w-full">
                     <input
                         type="text"
