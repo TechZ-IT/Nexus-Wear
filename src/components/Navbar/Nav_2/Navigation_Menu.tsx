@@ -18,7 +18,7 @@ export default function Navigation_Menu() {
   const pathName = usePathname()
 
   return (
-    <div className='flex md:ml-1 lg:ml-3  md:gap-1 lg:gap-3'>
+    <div className='flex md:ml-1 lg:ml-3 md:gap-1 lg:gap-3'>
       {categories.map((item, ind) => (
         <Link href={`/categories/${item}`} key={ind}>
           <Button

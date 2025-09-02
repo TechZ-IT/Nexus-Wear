@@ -7,8 +7,8 @@ export default function Navbar() {
     const pathName = usePathname();
     const shouldShowNav2 = (pathName === '/about-us') || (pathName === '/contact-us');
     return (
-        <div className="shadow-xl w-full">
-            <div className="max-w-7xl w-full flex flex-col gap-2 md:px-5 px-3 mx-auto  py-2.5">
+        <div className="md:px-5 px-3 w-full">
+            <div className="max-w-7xl w-full flex flex-col gap-2 my-3 mx-auto  py-2.5">
                 <Nav_1></Nav_1>
                 {shouldShowNav2 ? '' : <Nav_2 />}
                 
