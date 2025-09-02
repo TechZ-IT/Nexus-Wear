@@ -39,7 +39,7 @@ export default function BasicLayout({
                   <Navbar />
                 </nav>
               )}
-              <main>
+              <main className='md:px-5 px-3'>
                 {children}
               </main>
               <Toaster position='top-right' />
