@@ -13,7 +13,6 @@ const bannerItems = [
   {
     id: 1,
     title: "Summer Collection",
-    subtitle: "New Arrivals",
     description: "Discover our latest summer fashion line with fresh designs and premium fabrics. Stay cool and stylish all season long.",
     imageUrl: "https://i.ibb.co.com/39k7LBWr/bg-image-2-removebg-preview.png",
     buttonText: "Shop Now",
@@ -29,7 +28,6 @@ const bannerItems = [
   {
     id: 2,
     title: "Premium Denim Jeans",
-    subtitle: "Best Sellers",
     description: "Experience ultimate comfort with our stretch denim collection. Perfect fit for every body type with premium quality fabric.",
     imageUrl: "https://i.ibb.co.com/yFRF9QZY/banner-img-1-removebg-preview.png",
     buttonText: "Explore Denim",
@@ -45,7 +43,6 @@ const bannerItems = [
   {
     id: 3,
     title: "Elegant Formal Wear",
-    subtitle: "Office Collection",
     description: "Look professional and polished with our premium formal wear collection. Perfect for office and business meetings.",
     imageUrl: "https://i.ibb.co.com/B2WJ6XCK/ho-slider-3-removebg-preview.png",
     buttonText: "Browse Collection",
@@ -62,34 +59,31 @@ const bannerItems = [
 
 export function Slider() {
   return (
-    <Carousel className="w-full rounded-xl h-full min-h-[500px] md:min-h-[600px] lg:min-h-[700px] relative group">
+    <Carousel className="w-full rounded-xl h-full min-h-[500px] md:min-h-[600px] lg:min-h-[500px] relative group">
       <CarouselContent className="rounded-xl">
         {bannerItems.map((item) => (
           <CarouselItem key={item.id}>
             <div className="h-full rounded-xl">
-              <Card className="border-none rounded-xl shadow-none h-full md:h-[637px] overflow-hidden">
+              <Card className="border-none rounded-xl shadow-none h-full md:h-[700px] lg:h-full overflow-hidden">
                 <CardContent className={`flex flex-col lg:flex-row h-full p-0 relative bg-[#F9F9F9] rounded-xl`}>
                   {/* Text Content */}
-                  <div className={`w-full lg:w-1/2 flex flex-col justify-center p-6  md:p-8 lg:p-16 order-2 lg:order-1`}>
-                    <h3 className="font-semibold uppercase text-xs sm:text-sm mb-2 tracking-wider">
-                      {item.subtitle}
-                    </h3>
-                    <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold leading-tight mb-3 md:mb-4">
+                  <div className={`w-full lg:w-1/2 flex flex-col justify-center px-6 py-6 md:p-8 lg:px-16  order-2 lnpg:order-1`}>
+                    <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold leading-tight mb-3 ">
                       {item.title} {item.isNew}
                     </h2>
-                    <p className="text-base sm:text-lg mb-4 md:mb-6 opacity-90">
+                    <p className="text-base hidden lg:block sm:text-lg mb-4 md:mb-6 opacity-90">
                       {item.description}
                     </p>
 
                     {/* Category */}
-                    <div className="mb-3 md:mb-4">
+                    <div className="mb-3 md:mb-3 lg:mb-4">
                       <span className="text-xs sm:text-sm font-medium bg-black/10 px-2 py-1 sm:px-3 sm:py-1 rounded-full">
                         {item.category}
                       </span>
                     </div>
 
                     {/* Rating */}
-                    <div className="flex items-center mb-3 md:mb-4">
+                    <div className="hidden lg:flex items-center mb-3 md:mb-4">
                       <div className="flex text-amber-400 mr-2">
                         {[...Array(5)].map((_, i) => (
                           <svg key={i} className="w-4 h-4 sm:w-5 sm:h-5 fill-current" viewBox="0 0 24 24">
@@ -97,11 +91,11 @@ export function Slider() {
                           </svg>
                         ))}
                       </div>
-                      <span className="text-xs sm:text-sm">{item.rating} ({item.reviews} reviews)</span>
+                      <span className="text-xs  sm:text-sm">{item.rating} ({item.reviews} reviews)</span>
                     </div>
 
                     {/* Pricing */}
-                    <div className="flex flex-wrap items-center mb-4 md:mb-6">
+                    <div className="flex flex-wrap items-center mb-4 md:mb-3 lg:mb-6">
                       <span className="text-xl sm:text-2xl md:text-3xl font-bold mr-3 md:mr-4">{item.price}</span>
                       <span className="text-base sm:text-lg text-gray-500 line-through mr-3 md:mr-4">{item.originalPrice}</span>
                       <span className="bg-red-500 text-white text-xs sm:text-sm font-bold px-2 py-1 rounded">
@@ -122,8 +116,8 @@ export function Slider() {
                   </div>
 
                   {/* Image with subtle overlay */}
-                  <div className="w-full lg:w-1/2 md:min-h-[400px] min-h-[300px] lg:h-full py-4 md:py-8 lg:py-14 relative overflow-hidden order-1 lg:order-2">
-                    <div className="absolute h-[400px] inset-0 bg-gradient-to-l from-white/20 to-transparent z-10 hidden lg:block"></div>
+                  <div className="w-full lg:w-1/2 md:min-h-[400px] lg:h-full py-2 md:py-8 lg:pt-14 relative overflow-hidden order-1 lg:order-2">
+                    <div className="absolute h-[400px] inset-0 bg-gradient-to-l from-white/20 to-transparent z-10  lg:block"></div>
                     <img
                       src={item.imageUrl}
                       alt={item.title}
