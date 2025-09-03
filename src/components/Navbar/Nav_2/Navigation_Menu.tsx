@@ -10,8 +10,8 @@ const categories = [
   "Womans",
   "Shoes",
   "Accessories",
-  "Dresses",
-  "Terms & conditions",
+  "Wedding Dresses",
+  "Terms ",
 ]
 
 export default function Navigation_Menu() {
