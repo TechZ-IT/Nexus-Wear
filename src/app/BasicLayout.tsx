@@ -8,6 +8,7 @@ import { Toaster } from 'react-hot-toast';
 import { Provider, useDispatch } from 'react-redux';
 import { initializeAuth } from "@/redux/features/auth/authSlice";
 import Navbar from '@/components/Navbar/Navbar';
+import { Footer } from '@/components/Footer/Footer';
 
 // Create the AuthInitializer as a separate client component
 function AuthInitializer({ children }: { children: React.ReactNode }) {
@@ -42,6 +43,11 @@ export default function BasicLayout({
               <main className='md:px-5 px-3'>
                 {children}
               </main>
+              {(pathName === '/login') || (pathName === '/register') || (pathName === '/dashboard') ? null : (
+                <nav>
+                  <Footer></Footer>
+                </nav>
+              )}
               <Toaster position='top-right' />
             </AuthInitializer>
           </PersistGate>
