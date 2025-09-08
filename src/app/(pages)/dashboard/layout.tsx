@@ -1,44 +1,86 @@
-import type { Metadata } from 'next'
+"use client"
 
-export const metadata: Metadata = {
-    title: 'Dashboard || Nexus',
-}
+import { useEffect, useState } from "react"
+import { useRouter } from "next/navigation"
+import { useSelector } from "react-redux"
+import { selectAuth } from "@/redux/features/auth/authSlice"
+
 import { AppSidebar } from "@/components/app-sidebar"
-import { ChartAreaInteractive } from "@/components/chart-area-interactive"
-import { DataTable } from "@/components/data-table"
-import { SectionCards } from "@/components/section-cards"
-import { SiteHeader } from "@/components/site-header"
 import {
-    SidebarInset,
-    SidebarProvider,
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb"
+import { Separator } from "@/components/ui/separator"
+import {
+  SidebarInset,
+  SidebarProvider,
+  SidebarTrigger,
 } from "@/components/ui/sidebar"
 
+// Define the proper type for children
 
-export default function DashboardLayout({
-    children,
-}: {
-    children: React.ReactNode
+
+export default function DashboardLayout({ children }: {
+  children: React.ReactNode
 }) {
-    return (
-        <>
+  const router = useRouter()
+  const { token } = useSelector(selectAuth)
+  const [loading, setLoading] = useState(true)
 
-            <div className="bg-white">
-                <SidebarProvider
-                    style={
-                        {
-                            "--sidebar-width": "calc(var(--spacing) * 72)",
-                            "--header-height": "calc(var(--spacing) * 12)",
-                        } as React.CSSProperties
-                    }
-                >
-                    <AppSidebar variant="inset" />
-                    <SidebarInset>
-                        <SiteHeader />
-                        
-                {children}
-                    </SidebarInset>
-                </SidebarProvider>
+  useEffect(() => {
+    const storedToken = localStorage.getItem("tokenforauthuser")
+
+    if (!token && !storedToken) {
+      router.push("/login")
+    } else {
+      setLoading(false)
+    }
+  }, [token, router])
+
+  if (loading) {
+    return (
+      <div className="flex h-screen w-full items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-primary border-solid"></div>
+      </div>
+    )
+  }
+
+  return (
+    <div>
+      <SidebarProvider>
+        <AppSidebar />
+        <SidebarInset>
+          <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
+            <div className="flex items-center gap-2 px-4">
+              <SidebarTrigger className="-ml-1" />
+              <Separator
+                orientation="vertical"
+                className="mr-2 data-[orientation=vertical]:h-4"
+              />
+              <Breadcrumb>
+                <BreadcrumbList>
+                  <BreadcrumbItem className="hidden md:block">
+                    <BreadcrumbLink href="#">
+                      Building Your Application
+                    </BreadcrumbLink>
+                  </BreadcrumbItem>
+                  <BreadcrumbSeparator className="hidden md:block" />
+                  <BreadcrumbItem>
+                    <BreadcrumbPage>Data Fetching</BreadcrumbPage>
+                  </BreadcrumbItem>
+                </BreadcrumbList>
+              </Breadcrumb>
             </div>
-        </>
-    );
+          </header>
+          <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
+            {children}
+          </div>
+        </SidebarInset>
+      </SidebarProvider>
+    </div>
+  )
 }

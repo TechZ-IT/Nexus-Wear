@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 import useAuthState from "@/hooks/useAuthState"
 import { clearAuth } from "@/redux/features/auth/authSlice";
+import Link from "next/link";
 import { useDispatch } from "react-redux"; // Import useDispatch
 
 export function Nav_Dropdown() {
@@ -41,21 +42,17 @@ export function Nav_Dropdown() {
             <DropdownMenuContent className="w-56" align="end">
                 <DropdownMenuLabel>My Account</DropdownMenuLabel>
                 <DropdownMenuGroup>
-                    <DropdownMenuItem>
+                    <Link href={'/dashboard/profile'}><DropdownMenuItem>
                         Profile
-                        <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
-                    </DropdownMenuItem>
+                    </DropdownMenuItem></Link>
                     <DropdownMenuItem>
                         Billing
-                        <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
                     </DropdownMenuItem>
                     <DropdownMenuItem>
                         Settings
-                        <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
                     </DropdownMenuItem>
                     <DropdownMenuItem>
                         Keyboard shortcuts
-                        <DropdownMenuShortcut>⌘K</DropdownMenuShortcut>
                     </DropdownMenuItem>
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />
@@ -74,7 +71,6 @@ export function Nav_Dropdown() {
                     </DropdownMenuSub>
                     <DropdownMenuItem>
                         New Team
-                        <DropdownMenuShortcut>⌘+T</DropdownMenuShortcut>
                     </DropdownMenuItem>
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />
@@ -84,7 +80,6 @@ export function Nav_Dropdown() {
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={handleLogout}> {/* Use the handler */}
                     Log out
-                    <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
                 </DropdownMenuItem>
             </DropdownMenuContent>
         </DropdownMenu>
