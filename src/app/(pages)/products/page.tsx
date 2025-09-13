@@ -1,8 +1,15 @@
+import Products from "./[category]/Products";
+import ProductSidebar from "./[category]/ProductSidebar";
 
-export default function Products() {
+export default function Page() {
   return (
-    <div className="max-w-7xl min-h-screen mx-auto ">
-      
+    <div className="max-w-7xl min-h-screen mx-auto grid grid-cols-4 gap-4">
+      <div className="col-span-1">
+        <ProductSidebar></ProductSidebar>
+      </div>
+      <div className="col-span-3">
+        <Products></Products>
+      </div>
     </div>
   )
 }
