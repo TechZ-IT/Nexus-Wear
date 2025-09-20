@@ -1,4 +1,3 @@
-// app/(basic)/layout.tsx
 "use client";
 import { PersistGate } from 'redux-persist/integration/react';
 import { store, persistor } from '@/redux/store';
