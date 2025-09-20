@@ -1,6 +1,5 @@
 "use client"
-
-import { useEffect, useState } from "react"
+import { ReactNode, useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { useSelector } from "react-redux"
 import { selectAuth } from "@/redux/features/auth/authSlice"
@@ -25,7 +24,7 @@ import {
 
 
 export default function DashboardLayout({ children }: {
-  children: React.ReactNode
+  children: ReactNode
 }) {
   const router = useRouter()
   const { token } = useSelector(selectAuth)

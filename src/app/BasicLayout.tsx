@@ -28,14 +28,17 @@ export default function BasicLayout({
   children: React.ReactNode;
 }>) {
   const pathName = usePathname();
-
+  const hideNavAndFooter =
+    pathName === "/login" ||
+    pathName === "/register" ||
+    pathName.startsWith("/dashboard");
   return (
     <html lang="en" data-theme="light">
       <body >
         <Provider store={store}>
           <PersistGate loading={null} persistor={persistor}>
             <AuthInitializer>
-              {(pathName === '/login') || (pathName === '/register') || (pathName === '/dashboard') ? null : (
+               {!hideNavAndFooter && (
                 <nav>
                   <Navbar />
                 </nav>
@@ -43,9 +46,9 @@ export default function BasicLayout({
               <main className='md:px-5 px-3'>
                 {children}
               </main>
-              {(pathName === '/login') || (pathName === '/register') || (pathName === '/dashboard') ? null : (
+              {!hideNavAndFooter && (
                 <nav>
-                  <Footer></Footer>
+                  <Footer />
                 </nav>
               )}
               <Toaster position='top-right' />
